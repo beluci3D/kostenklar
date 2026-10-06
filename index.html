@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kostenklar – Ist dein Angebot fair?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800;125,800&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#EAF1F4; --paper:#FFFFFF; --ink:#0F2433; --soft:#4A5E6B; --line:#C7D4DB;
+  --fair:#0B6C96; --fair-bg:#DCEEF6; --high:#B8410B; --high-bg:#FBE6D9; --deal:#2F6B3A; --deal-bg:#E1F0E2;
+  --ad:#DDE6EB; --focus:#0B6C96;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0C1A23; --paper:#132733; --ink:#E6EFF3; --soft:#A7B9C3; --line:#2B4352;
+    --fair:#6CC0E6; --fair-bg:#123A4D; --high:#F59A62; --high-bg:#4A2414; --deal:#86CF94; --deal-bg:#173A1E;
+    --ad:#1A303D; --focus:#6CC0E6;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0C1A23; --paper:#132733; --ink:#E6EFF3; --soft:#A7B9C3; --line:#2B4352;
+  --fair:#6CC0E6; --fair-bg:#123A4D; --high:#F59A62; --high-bg:#4A2414; --deal:#86CF94; --deal-bg:#173A1E;
+  --ad:#1A303D; --focus:#6CC0E6;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:"Source Sans 3","Segoe UI",system-ui,sans-serif;font-size:17px;line-height:1.55}
+a{color:var(--fair)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+h1,h2,h3{font-family:"Archivo","Arial Narrow",sans-serif;font-stretch:112%;margin:0;line-height:1.02;letter-spacing:-0.01em}
+header.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:20px 0}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:"Archivo",sans-serif;font-weight:800;font-stretch:125%;font-size:24px}
+.logo svg{flex:none}
+nav.links{display:flex;flex-wrap:wrap;gap:18px;font-weight:600}
+nav.links a{color:var(--ink);text-decoration:none;padding:8px 2px}
+nav.links a:hover{color:var(--fair)}
+
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:44px;padding:36px 0 64px;align-items:start}
+@media (max-width:900px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font-size:clamp(44px,7vw,88px);font-weight:800;font-stretch:125%}
+.hero .lead{font-size:20px;color:var(--soft);max-width:30em;margin:22px 0 0}
+.bonroll{margin-top:30px;max-width:340px;background:var(--paper);border:1px solid var(--line);padding:16px 18px 22px;font-variant-numeric:tabular-nums;font-size:15px;position:relative;
+  -webkit-mask:radial-gradient(circle 6px at 50% 100%,transparent 98%,#000) 0 0/16px 100% repeat-x;mask:radial-gradient(circle 6px at 50% 100%,transparent 98%,#000) 0 0/16px 100% repeat-x}
+.bonroll div{display:flex;justify-content:space-between;gap:12px;padding:3px 0}
+.bonroll .sum{border-top:2px dashed var(--line);margin-top:8px;padding-top:8px;font-weight:700}
+.bonroll s{color:var(--soft)}
+.bonroll strong{color:var(--fair)}
+
+.card{background:var(--paper);border:2px solid var(--ink);border-radius:18px;padding:26px;box-shadow:6px 6px 0 var(--ink)}
+.card h2{font-size:26px;font-weight:800}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label,.lbl{font-weight:600;font-size:15px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.row2{grid-template-columns:minmax(0,1fr)}}
+select,input[type=text],textarea{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:46px;width:100%}
+textarea{min-height:110px;resize:vertical}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:2px dashed var(--line);border-radius:14px;padding:26px 16px;text-align:center;cursor:pointer;background:var(--ground);transition:border-color .15s}
+.drop:hover,.drop.over{border-color:var(--fair)}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.drop .big{font-weight:700;font-size:17px}
+.drop .small{font-size:14px;color:var(--soft)}
+.filechip{display:none;align-items:center;justify-content:space-between;gap:10px;border:1.5px solid var(--fair);background:var(--fair-bg);border-radius:10px;padding:8px 8px 8px 12px;font-size:15px}
+.filechip.on{display:flex}
+.btn{font:inherit;font-weight:700;font-size:17px;border:0;border-radius:12px;min-height:52px;padding:0 22px;cursor:pointer;background:var(--ink);color:var(--paper)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);min-height:46px;font-size:16px}
+.btn.small{min-height:40px;font-size:14px;padding:0 12px;border-radius:8px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.hint{font-size:14px;color:var(--soft)}
+.or{display:flex;align-items:center;gap:12px;color:var(--soft);font-size:14px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.notice{border-radius:12px;padding:14px 16px;font-size:15px;background:var(--high-bg);color:var(--ink)}
+.hidden{display:none !important}
+
+/* result */
+.result{margin-top:4px}
+.verdict{display:flex;flex-direction:column;gap:6px;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+.verdict .kicker{font-size:15px;color:var(--soft)}
+.verdict h3{font-size:clamp(28px,4vw,38px);font-weight:800;font-stretch:112%}
+.verdict p{margin:4px 0 0;color:var(--soft)}
+.pos{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.pos .name{font-weight:600}
+.pos .amt{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.pos .scale{grid-column:1 / -1;position:relative;height:22px}
+.pos .track{position:absolute;left:0;right:0;top:9px;height:4px;border-radius:2px;background:var(--line)}
+.pos .band{position:absolute;left:25%;width:50%;top:6px;height:10px;border-radius:5px;background:var(--fair-bg);border:1.5px solid var(--fair)}
+.pos .mark{position:absolute;top:1px;width:4px;height:20px;border-radius:2px;background:var(--ink);transform:translateX(-2px)}
+.pos .meta{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:14px;color:var(--soft)}
+.pill{display:inline-block;font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px}
+.p-fair{background:var(--fair-bg);color:var(--fair)}
+.p-high{background:var(--high-bg);color:var(--high)}
+.p-deal{background:var(--deal-bg);color:var(--deal)}
+.p-unk{background:var(--ground);color:var(--soft);border:1px solid var(--line)}
+.pos .why{grid-column:1 / -1;font-size:15px;margin:0}
+.tips{margin:0;padding-left:20px}
+.tips li{margin:4px 0}
+.letter{white-space:pre-wrap;background:var(--ground);border-radius:12px;padding:14px 16px;font-size:15px}
+.disclaim{font-size:13px;color:var(--soft)}
+.ad{border:1.5px dashed var(--line);background:var(--ad);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--soft);display:flex;flex-direction:column;gap:2px}
+.ad b{font-size:12px;color:var(--soft);font-weight:600}
+.adbanner{min-height:96px;justify-content:center;align-items:center;text-align:center}
+
+.spinner{width:44px;height:44px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--fair);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spinner{animation-duration:3s}}
+.loading{display:flex;flex-direction:column;align-items:center;gap:14px;padding:46px 10px;text-align:center}
+
+/* sections */
+section.block{padding:72px 0}
+section.block h2{font-size:clamp(32px,4.4vw,52px);font-weight:800;max-width:16em}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:34px}
+@media (max-width:820px){.steps{grid-template-columns:minmax(0,1fr)}}
+.step{border-top:3px solid var(--ink);padding-top:14px}
+.step .n{font-family:"Archivo",sans-serif;font-weight:800;font-size:40px;font-stretch:125%;color:var(--fair);line-height:1}
+.step h3{font-size:22px;margin:10px 0 6px}
+.step p{margin:0;color:var(--soft)}
+.lookup{background:var(--ink);color:var(--ground)}
+.lookup h2{color:var(--ground)}
+.lookup .sub{color:#B9CBD5;max-width:34em;margin:14px 0 26px}
+.lookbar{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto;gap:10px}
+@media (max-width:760px){.lookbar{grid-template-columns:minmax(0,1fr)}}
+.lookup select,.lookup input[type=text]{background:#FFFFFF;color:#0F2433;border-color:#FFFFFF}
+.lookup .btn{background:#6CC0E6;color:#0F2433}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font:inherit;font-size:15px;background:transparent;color:var(--ground);border:1.5px solid #4B6577;border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+.chip:hover{border-color:#6CC0E6}
+.lookres{margin-top:26px;background:#FFFFFF;color:#0F2433;border-radius:16px;padding:22px}
+.lookres .range{font-family:"Archivo",sans-serif;font-weight:800;font-stretch:112%;font-size:clamp(30px,5vw,46px);line-height:1.05}
+.lookres ul{margin:8px 0 0;padding-left:20px}
+.lookres .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:16px}
+@media (max-width:640px){.lookres .cols{grid-template-columns:minmax(0,1fr)}}
+.lookres .disclaim{color:#4A5E6B}
+.privacy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:820px){.privacy{grid-template-columns:minmax(0,1fr)}}
+.privacy p{color:var(--soft);font-size:18px}
+.redact{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;font-variant-numeric:tabular-nums;line-height:2.1}
+.redact .bar{display:inline-block;background:var(--ink);border-radius:3px;height:14px;vertical-align:middle}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:14px;color:var(--soft)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#pruefen" aria-label="Kostenklar Startseite">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="5" y="3" width="24" height="28" rx="3" stroke="currentColor" stroke-width="2.4"/><path d="M11 12h12M11 18h7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="m17 24 3 3 6-7" stroke="#0B6C96" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Kostenklar
+    </a>
+    <nav class="links" aria-label="Hauptnavigation">
+      <a href="#pruefen">Angebot prüfen</a>
+      <a href="#preise">Preise nachschlagen</a>
+      <a href="#datenschutz">Datenschutz</a>
+    </nav>
+  </header>
+
+  <main>
+  <div class="hero" id="pruefen">
+    <div>
+      <h1>Zahlst du zu viel?</h1>
+      <p class="lead">Foto von Rechnung oder Kostenvoranschlag hochladen. Kostenklar prüft jede Position, zeigt dir übliche Preise in deiner Region und sagt dir, wo sich Nachverhandeln lohnt.</p>
+      <div class="bonroll" aria-hidden="true">
+        <div><span>Montage 22 Std.</span><s>2.090 €</s></div>
+        <div><span>üblich</span><strong>1.100 – 1.500 €</strong></div>
+        <div><span>Fliesen 18 m²</span><span>2.340 €</span></div>
+        <div><span>üblich</span><strong>1.800 – 2.500 €</strong></div>
+        <div class="sum"><span>Sparpotenzial</span><span>ca. 600 €</span></div>
+      </div>
+    </div>
+
+    <div class="card" aria-live="polite">
+      <!-- FORM -->
+      <div id="formView" class="stack">
+        <h2>Angebot prüfen</h2>
+        <div class="row2">
+          <div class="field">
+            <label for="kat">Worum geht es?</label>
+            <select id="kat">
+              <option>Handwerk / Renovierung</option>
+              <option>Autowerkstatt</option>
+              <option>Zahnarzt</option>
+              <option>Elektriker</option>
+              <option>Installateur / Heizung</option>
+              <option>Umzug / Reinigung</option>
+              <option>Sonstiges</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="region">Region</label>
+            <select id="region">
+              <option>Oberösterreich</option><option>Wien</option><option>Niederösterreich</option><option>Salzburg</option><option>Steiermark</option><option>Tirol</option><option>Kärnten</option><option>Vorarlberg</option><option>Burgenland</option>
+              <option>Deutschland – Süd</option><option>Deutschland – Nord</option><option>Deutschland – West</option><option>Deutschland – Ost</option><option>Schweiz</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="imgArea" class="stack">
+          <label class="drop" id="drop" for="file">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 18v-6"/><path d="m9 15 3-3 3 3"/></svg>
+            <span class="big">Foto, Screenshot oder PDF hochladen</span>
+            <span class="small">JPG, PNG, WebP oder PDF – bei PDFs werden bis zu 3 Seiten gelesen</span>
+            <input type="file" id="file" accept="image/jpeg,image/png,image/webp,application/pdf,.pdf">
+          </label>
+          <div class="filechip" id="chip"><span id="chipName"></span><button type="button" class="btn ghost small" id="chipX">Entfernen</button></div>
+          <div class="or">oder Text einfügen</div>
+        </div>
+
+        <div class="field">
+          <label for="txt" id="txtLabel">Positionen aus dem Angebot</label>
+          <textarea id="txt" placeholder="z. B.&#10;Bremsscheiben + Beläge vorne  420 €&#10;Arbeitszeit 2,5 Std.  287 €"></textarea>
+        </div>
+
+        <button type="button" class="btn" id="go">Jetzt prüfen</button>
+                <p class="notice hidden" id="err"></p>
+        <p class="hint">Namen, Adressen und Kontonummern werden nicht ausgewertet. Die Prüfung ist eine KI-Einschätzung, kein Gutachten.</p>
+      </div>
+
+      <!-- LOADING -->
+      <div id="loadView" class="loading hidden">
+        <div class="spinner" aria-hidden="true"></div>
+        <strong id="loadText">Positionen werden gelesen …</strong>
+        <span class="hint">Das dauert meist 20 bis 60 Sekunden.</span>
+        <button type="button" class="btn ghost small" id="stop">Abbrechen</button>
+      </div>
+
+      <!-- RESULT -->
+      <div id="resView" class="stack result hidden">
+        <div class="verdict">
+          <span class="kicker" id="rKicker"></span>
+          <h3 id="rTitle"></h3>
+          <p id="rSummary"></p>
+        </div>
+        <div id="rPositions"></div>
+        <div class="ad"><b>Anzeige</b><span>[Werbepartner passend zur Kategorie, z. B. Vergleichsangebote von Betrieben in deiner Nähe]</span></div>
+        <div id="rTipsWrap" class="stack">
+          <h3 style="font-size:22px">So verhandelst du nach</h3>
+          <ul class="tips" id="rTips"></ul>
+        </div>
+        <div id="rLetterWrap" class="stack">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px">
+            <h3 style="font-size:22px">Nachricht an den Betrieb</h3>
+            <button type="button" class="btn ghost small" id="copy">Text kopieren</button>
+          </div>
+          <div class="letter" id="rLetter"></div>
+        </div>
+        <p class="disclaim">Kostenklar schätzt übliche Preise mit KI auf Basis allgemeiner Marktkenntnis. Die Spannen sind Richtwerte, keine Garantie und keine Rechtsberatung. Regionale Unterschiede, Material und Aufwand können abweichen.</p>
+        <button type="button" class="btn ghost" id="again">Weiteres Angebot prüfen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad adbanner"><b>Anzeige</b><span>Werbefläche 970 × 90</span></div>
+  </main>
+</div>
+
+<section class="block" id="sogehts">
+  <div class="wrap">
+    <h2>Drei Schritte zu einem fairen Preis</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Hochladen</h3><p>Ein Foto der Rechnung oder des Angebots reicht. Oder du tippst die Positionen ab.</p></div>
+      <div class="step"><div class="n">2</div><h3>Prüfen lassen</h3><p>Jede Position wird erkannt und mit üblichen Preisen für deine Region verglichen.</p></div>
+      <div class="step"><div class="n">3</div><h3>Nachverhandeln</h3><p>Du bekommst konkrete Punkte und eine fertige Nachricht, die du direkt verschicken kannst.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block lookup" id="preise">
+  <div class="wrap">
+    <h2>Was kostet das eigentlich?</h2>
+    <p class="sub">Noch kein Angebot in der Hand? Schlag nach, womit du ungefähr rechnen musst, bevor du anfragst.</p>
+    <div class="lookbar">
+      <label class="hidden" for="q">Leistung</label>
+      <input type="text" id="q" placeholder="z. B. Bremsen vorne wechseln, VW Golf" aria-label="Leistung">
+      <select id="qRegion" aria-label="Region">
+        <option>Oberösterreich</option><option>Wien</option><option>Niederösterreich</option><option>Salzburg</option><option>Steiermark</option><option>Tirol</option><option>Kärnten</option><option>Vorarlberg</option><option>Burgenland</option><option>Deutschland</option><option>Schweiz</option>
+      </select>
+      <button type="button" class="btn" id="qGo">Preis nachschlagen</button>
+    </div>
+    <div class="chips" id="chips">
+      <button type="button" class="chip">Badsanierung 6 m²</button>
+      <button type="button" class="chip">Zahnkrone Keramik</button>
+      <button type="button" class="chip">Gastherme tauschen</button>
+      <button type="button" class="chip">Pickerl-Überprüfung</button>
+      <button type="button" class="chip">Wohnung ausmalen 70 m²</button>
+      <button type="button" class="chip">Umzug 2-Zimmer-Wohnung</button>
+    </div>
+    <div class="lookres hidden" id="lookres" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="block" id="datenschutz">
+  <div class="wrap privacy">
+    <div>
+      <h2>Deine Rechnung bleibt deine Sache</h2>
+      <p>Ausgewertet werden nur Leistungen, Mengen und Preise. Namen, Adressen, Kontonummern und Firmennamen spielen für die Prüfung keine Rolle und werden nicht wiedergegeben.</p>
+    </div>
+    <div class="redact" aria-hidden="true">
+      <div><span class="bar" style="width:62%"></span></div>
+      <div><span class="bar" style="width:48%"></span></div>
+      <div>Fliesenarbeiten 18 m² … 2.340 €</div>
+      <div>Sanitärinstallation … 1.980 €</div>
+      <div>Region: Oberösterreich</div>
+      <div><span class="bar" style="width:70%"></span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© Kostenklar · Preisangaben sind KI-Richtwerte, keine Rechtsberatung.</span>
+    <span><a href="#datenschutz">Datenschutz</a> · <a href="#pruefen">Impressum</a> · <a href="#pruefen">Werben auf Kostenklar</a></span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
+<script>
+(function(){
+  /* ===== Einstellungen ===== */
+  var API_URL = "api.php";   // Pfad zum Server-Skript (bei eigenem Hosting)
+  var MAX_PAGES = 3;         // so viele PDF-Seiten werden gelesen
+
+  var $ = function(id){ return document.getElementById(id); };
+  var MODE = null, sample = null, maxImages = MAX_PAGES, canImages = false;
+  var prepared = null, preparing = null, ctl = null, qCtl = null;
+  var LABEL = {guenstig:["günstig","p-deal"],fair:["fair","p-fair"],etwas_hoch:["etwas hoch","p-high"],zu_hoch:["zu hoch","p-high"],unklar:["unklar","p-unk"]};
+  var eur = function(n){ n=Number(n); if(!isFinite(n)) return "–"; return n.toLocaleString("de-AT",{maximumFractionDigits:0})+" €"; };
+  function el(tag, cls, text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  function show(view){ ["formView","loadView","resView"].forEach(function(v){ $(v).classList.toggle("hidden", v!==view); }); }
+  function showErr(msg){ var b=$("err"); b.textContent=msg; b.classList.remove("hidden"); }
+  function hideErr(){ $("err").classList.add("hidden"); }
+
+  function errText(e){
+    var c = e && e.code;
+    if(c==="not_granted"||c==="sampling_disabled"||c==="capability_disabled") return "Die KI-Prüfung wurde nicht freigegeben. Erlaube sie im Dialog, um Angebote zu prüfen.";
+    if(c==="rate_limited") return "Gerade zu viele Anfragen. Versuch es in ein paar Minuten noch einmal.";
+    if(c==="image_rejected") return "Diese Datei konnte nicht gelesen werden. Versuch ein schärferes Foto oder ein anderes PDF.";
+    if(c==="invalid_json"||c==="empty_completion") return "Das Angebot konnte nicht sauber ausgewertet werden. Versuch es noch einmal oder füge die Positionen als Text ein.";
+    if(c==="refused") return "Dieses Dokument kann nicht geprüft werden. Lade eine Rechnung oder ein Angebot hoch.";
+    if(c==="session_expired") return "Bitte melde dich neu an und versuch es dann erneut.";
+    if(c==="server_unreachable") return "Der Server ist nicht erreichbar. Prüfe, ob api.php hochgeladen ist und PHP auf deinem Webspace läuft.";
+    if(c==="config") return "Auf dem Server fehlt der API-Schlüssel. Trag ihn in config.php ein.";
+    if(c==="too_large") return "Die Datei ist zu groß. Versuch ein kleineres Foto oder weniger Seiten.";
+    return (e && e.message && e.code==="server") ? e.message : "Die Prüfung ist fehlgeschlagen. Versuch es noch einmal.";
+  }
+
+  /* ===== Prompts (gleich wie in api.php) ===== */
+  function checkPrompt(kat, region, text, hasImg){
+    return [
+      "Du bist ein unabhängiger, ehrlicher Preisprüfer für Verbraucher im deutschsprachigen Raum.",
+      "Kategorie: " + kat + ". Region: " + region + ".",
+      hasImg ? "In den Bildern ist eine Rechnung oder ein Kostenvoranschlag. Lies alle Positionen mit Beträgen aus." : "Unten stehen die Positionen einer Rechnung oder eines Kostenvoranschlags.",
+      text ? ("Text aus dem Dokument bzw. vom Nutzer:\n\"\"\"\n" + text.slice(0,12000) + "\n\"\"\"") : "",
+      "Regeln:",
+      "- Ignoriere persönliche Daten (Namen, Adressen, Telefonnummern, Kontonummern, Firmennamen) und gib sie nirgends wieder.",
+      "- Schätze für jede Position eine realistische übliche Preisspanne in Euro brutto für diese Region (Stand 2026), basierend auf deinem Marktwissen. Berücksichtige Mengen, Stunden und Stundensätze.",
+      "- Bewertung je Position: \"guenstig\" (unter Spanne), \"fair\" (in Spanne), \"etwas_hoch\" (bis ca. 20 % darüber), \"zu_hoch\" (deutlich darüber), \"unklar\" (nicht beurteilbar).",
+      "- Sei fair gegenüber dem Betrieb: nenne auch gute Gründe für höhere Preise. Keine Panikmache.",
+      "- Wenn es keine Rechnung/kein Angebot ist oder nichts lesbar ist, setze ist_rechnung auf false und erkläre es in fazit.",
+      "- Alle Texte auf Deutsch, kurz und verständlich, Du-Form.",
+      "Antworte NUR mit diesem JSON:",
+      '{"ist_rechnung":true,"leistung":"kurze Bezeichnung","positionen":[{"bezeichnung":"...","betrag":0,"ueblich_von":0,"ueblich_bis":0,"bewertung":"fair","kommentar":"ein Satz"}],"summe":0,"fair_von":0,"fair_bis":0,"gesamt_bewertung":"fair","fazit":"1-2 Sätze","tipps":["konkreter Tipp"],"nachricht":"höfliche, kurze Nachricht an den Betrieb mit Bitte um Erklärung oder Anpassung der auffälligen Positionen, ohne Namen"}'
+    ].filter(Boolean).join("\n");
+  }
+  function lookupPrompt(q, region){
+    return "Du bist ein ehrlicher Preisexperte für Verbraucher. Schätze den üblichen Gesamtpreis (Euro brutto, Stand 2026) für folgende Leistung in der Region " + region + ": \"" + q.slice(0,200) + "\".\n" +
+      "Wenn die Anfrage keine kaufbare Leistung ist, setze von und bis auf 0 und erkläre es in hinweis.\n" +
+      'Antworte NUR mit JSON: {"leistung":"saubere Bezeichnung","von":0,"bis":0,"hinweis":"1 Satz, was im Preis typischerweise enthalten ist","preistreiber":["max 4 kurze Punkte"],"spartipps":["max 3 kurze Punkte"]}. Texte auf Deutsch, Du-Form.';
+  }
+
+  /* ===== Modus erkennen: in Claude oder auf eigenem Server ===== */
+  var ready = (async function(){
+    if(window.claude && typeof window.claude.use==="function"){
+      try{ sample = await window.claude.use("sample"); }catch(e){ sample = null; }
+    }
+    if(sample){
+      MODE = "claude";
+      try{ var lim = await sample.limits(); canImages = !!(lim && lim.images); if(canImages) maxImages = Math.min(MAX_PAGES, lim.images.maxCount||1); }catch(e){ canImages=false; }
+    } else {
+      MODE = "server"; canImages = true; maxImages = MAX_PAGES;
+    }
+  })();
+
+  /* ===== Datei vorbereiten (Bild oder PDF) ===== */
+  function canvasToBlob(c){ return new Promise(function(r){ c.toBlob(r,"image/jpeg",0.85); }); }
+
+  async function readPdf(f){
+    if(!window.pdfjsLib) throw {code:"pdf", message:"Der PDF-Leser konnte nicht geladen werden. Mach bitte einen Screenshot."};
+    var buf = await f.arrayBuffer();
+    var doc = await window.pdfjsLib.getDocument({data:new Uint8Array(buf), isEvalSupported:false}).promise;
+    var n = Math.min(doc.numPages, MAX_PAGES), texts=[], images=[];
+    for(var i=1;i<=n;i++){
+      var page = await doc.getPage(i);
+      var tc = await page.getTextContent();
+      texts.push(tc.items.map(function(it){ return it.str + (it.hasEOL ? "\n" : " "); }).join(""));
+      var base = page.getViewport({scale:1});
+      var scale = Math.min(2.5, 1500/base.width);
+      var vp = page.getViewport({scale:scale});
+      var c = document.createElement("canvas"); c.width=Math.floor(vp.width); c.height=Math.floor(vp.height);
+      var ctx = c.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,c.width,c.height);
+      await page.render({canvasContext:ctx, viewport:vp}).promise;
+      images.push(await canvasToBlob(c));
+    }
+    return {images:images, text:texts.join("\n\n").replace(/[ \t]+/g," ").trim(), pages:doc.numPages, isPdf:true};
+  }
+
+  async function shrinkImage(f){
+    try{
+      var bmp = await createImageBitmap(f);
+      var s = Math.min(1, 1600/Math.max(bmp.width,bmp.height));
+      var c = document.createElement("canvas"); c.width=Math.round(bmp.width*s); c.height=Math.round(bmp.height*s);
+      var ctx=c.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,c.width,c.height); ctx.drawImage(bmp,0,0,c.width,c.height);
+      return await canvasToBlob(c);
+    }catch(e){ return f; }
+  }
+
+  async function prepare(f){
+    var isPdf = f.type==="application/pdf" || /\.pdf$/i.test(f.name);
+    if(isPdf) return readPdf(f);
+    if(/^image\/(jpeg|png|webp|gif)$/.test(f.type)) return {images:[await shrinkImage(f)], text:"", pages:1, isPdf:false};
+    throw {code:"type", message:"Dieses Dateiformat wird nicht unterstützt. Bitte JPG, PNG, WebP oder PDF."};
+  }
+
+  function setChip(text){ $("chip").classList.toggle("on", !!text); $("chipName").textContent = text || ""; }
+  function clearFile(){ $("file").value=""; prepared=null; preparing=null; setChip(""); $("txtLabel").textContent="Positionen aus dem Angebot"; }
+
+  function handleFile(f){
+    hideErr(); if(!f){ clearFile(); return; }
+    setChip(f.name + " – wird gelesen …"); $("go").disabled = true;
+    var p = preparing = prepare(f).then(function(r){
+      if(p!==preparing) return;
+      prepared = r;
+      var info = r.isPdf ? (r.pages + (r.pages===1?" Seite":" Seiten") + (r.pages>MAX_PAGES?" (die ersten "+MAX_PAGES+" werden geprüft)":"")) : "Bild";
+      setChip(f.name + " · " + info);
+      $("txtLabel").textContent = "Ergänzungen (optional)";
+    }).catch(function(e){
+      if(p!==preparing) return;
+      clearFile(); showErr((e&&e.message)||"Die Datei konnte nicht gelesen werden.");
+    }).finally(function(){ if(p===preparing) $("go").disabled=false; });
+  }
+
+  $("file").addEventListener("change", function(){ handleFile(this.files && this.files[0]); });
+  $("chipX").addEventListener("click", clearFile);
+  var drop=$("drop");
+  ["dragenter","dragover"].forEach(function(t){ drop.addEventListener(t,function(e){ e.preventDefault(); drop.classList.add("over"); }); });
+  ["dragleave","drop"].forEach(function(t){ drop.addEventListener(t,function(e){ e.preventDefault(); drop.classList.remove("over"); }); });
+  drop.addEventListener("drop", function(e){ var f=e.dataTransfer&&e.dataTransfer.files[0]; if(f) handleFile(f); });
+
+  /* ===== Server-Aufruf (eigenes Hosting) ===== */
+  function blobToB64(b){ return new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(){ res(String(r.result).split(",")[1]); }; r.onerror=rej; r.readAsDataURL(b); }); }
+
+  async function callServer(body, signal){
+    var res;
+    try{ res = await fetch(API_URL, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body), signal:signal}); }
+    catch(e){ if(e && e.name==="AbortError") throw {code:"cancelled"}; throw {code:"server_unreachable"}; }
+    var j=null; try{ j = await res.json(); }catch(e){ throw {code: res.status===404 ? "server_unreachable" : "upstream_error"}; }
+    if(!j || !j.ok) throw {code:(j&&j.code)||"server", message:(j&&j.error)||""};
+    return j.data;
+  }
+
+  async function askCheck(kat, region, text, images, signal){
+    if(MODE==="claude"){
+      var useImgs = canImages ? images.slice(0,maxImages) : [];
+      if(!useImgs.length && !text) throw {code:"server", message:"In dieser Ansicht können keine Bilder gelesen werden. Bitte füge die Positionen als Text ein."};
+      var opts = {signal:signal, modelTier:"default"};
+      if(useImgs.length) opts.images = useImgs;
+      return sample.json(checkPrompt(kat, region, text, useImgs.length>0), opts);
+    }
+    var imgs = [];
+    for(var i=0;i<Math.min(images.length,MAX_PAGES);i++) imgs.push({media_type:"image/jpeg", data: await blobToB64(images[i])});
+    return callServer({mode:"pruefen", kat:kat, region:region, text:text, images:imgs}, signal);
+  }
+
+  async function askLookup(q, region, signal){
+    if(MODE==="claude") return sample.json(lookupPrompt(q, region), {signal:signal, modelTier:"quick", cache:{gcTime:3600000}});
+    return callServer({mode:"preis", q:q, region:region}, signal);
+  }
+
+  /* ===== Ergebnis anzeigen ===== */
+  function renderResult(d){
+    var pos = Array.isArray(d.positionen) ? d.positionen : [];
+    $("rKicker").textContent = (d.leistung || "Dein Angebot") + " · " + $("region").value;
+    var title;
+    if(d.ist_rechnung===false) title="Das konnten wir nicht prüfen";
+    else if(d.gesamt_bewertung==="fair") title="Das Angebot wirkt fair";
+    else if(d.gesamt_bewertung==="guenstig") title="Das Angebot ist eher günstig";
+    else if(d.gesamt_bewertung==="etwas_hoch") title="Etwas über dem Üblichen";
+    else if(d.gesamt_bewertung==="zu_hoch") title="Deutlich über dem Üblichen";
+    else title="Teilweise nicht eindeutig";
+    $("rTitle").textContent = title;
+    var sumLine = (Number(d.summe)>0 && Number(d.fair_bis)>0) ? ("Gesamt " + eur(d.summe) + ", üblich wären etwa " + eur(d.fair_von) + " bis " + eur(d.fair_bis) + ". ") : "";
+    $("rSummary").textContent = sumLine + (d.fazit || "");
+
+    var box=$("rPositions"); box.textContent="";
+    pos.forEach(function(p){
+      var row=el("div","pos");
+      row.appendChild(el("div","name",p.bezeichnung||"Position"));
+      row.appendChild(el("div","amt",eur(p.betrag)));
+      var lo=Number(p.ueblich_von), hi=Number(p.ueblich_bis), v=Number(p.betrag);
+      if(isFinite(lo)&&isFinite(hi)&&hi>lo&&isFinite(v)){
+        var sc=el("div","scale"); sc.setAttribute("aria-hidden","true");
+        sc.appendChild(el("div","track")); sc.appendChild(el("div","band"));
+        var pct = Math.max(2,Math.min(98, 25 + ((v-lo)/(hi-lo))*50));
+        var m=el("div","mark"); m.style.left=pct+"%"; sc.appendChild(m);
+        row.appendChild(sc);
+      }
+      var meta=el("div","meta"), l=LABEL[p.bewertung]||LABEL.unklar;
+      meta.appendChild(el("span","pill "+l[1],l[0]));
+      if(isFinite(lo)&&isFinite(hi)&&hi>0) meta.appendChild(el("span",null,"üblich: "+eur(lo)+" – "+eur(hi)));
+      row.appendChild(meta);
+      if(p.kommentar) row.appendChild(el("p","why",p.kommentar));
+      box.appendChild(row);
+    });
+    var tips=Array.isArray(d.tipps)?d.tipps:[];
+    $("rTips").textContent=""; tips.forEach(function(t){ $("rTips").appendChild(el("li",null,String(t))); });
+    $("rTipsWrap").classList.toggle("hidden", !tips.length);
+    $("rLetter").textContent = d.nachricht || "";
+    $("rLetterWrap").classList.toggle("hidden", !d.nachricht || d.gesamt_bewertung==="fair" || d.gesamt_bewertung==="guenstig");
+    show("resView");
+  }
+
+  /* ===== Prüfen ===== */
+  async function run(){
+    hideErr();
+    await ready;
+    if(preparing){ try{ await preparing; }catch(e){} }
+    var text = $("txt").value.trim();
+    var images = prepared ? prepared.images : [];
+    var docText = prepared && prepared.text ? prepared.text : "";
+    var allText = [docText, text].filter(Boolean).join("\n\nErgänzung vom Nutzer:\n");
+    if(!images.length && allText.length<8){ showErr("Lade ein Foto oder PDF hoch, oder füge die Positionen als Text ein."); return; }
+    ctl = new AbortController();
+    show("loadView"); $("loadText").textContent="Positionen werden gelesen …";
+    var t=setTimeout(function(){ $("loadText").textContent="Preise werden verglichen …"; },9000);
+    try{
+      var d = await askCheck($("kat").value, $("region").value, allText, images, ctl.signal);
+      if(!d || typeof d!=="object") throw {code:"invalid_json"};
+      renderResult(d);
+    }catch(e){
+      show("formView");
+      if(!(e&&e.code==="cancelled")) showErr(errText(e));
+    }finally{ clearTimeout(t); }
+  }
+
+  $("go").addEventListener("click", run);
+  $("stop").addEventListener("click", function(){ if(ctl) ctl.abort(); });
+  $("again").addEventListener("click", function(){ clearFile(); $("txt").value=""; show("formView"); $("pruefen").scrollIntoView({behavior:"smooth"}); });
+  $("copy").addEventListener("click", async function(){
+    var b=this;
+    try{ await navigator.clipboard.writeText($("rLetter").textContent); b.textContent="Kopiert"; }
+    catch(e){ var r=document.createRange(); r.selectNodeContents($("rLetter")); var s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent="Markiert – jetzt kopieren"; }
+    setTimeout(function(){ b.textContent="Text kopieren"; },2500);
+  });
+
+  /* ===== Preis nachschlagen ===== */
+  async function lookup(){
+    var q=$("q").value.trim(), out=$("lookres");
+    if(q.length<3){ $("q").focus(); return; }
+    await ready;
+    if(qCtl) qCtl.abort(); qCtl=new AbortController();
+    out.classList.remove("hidden"); out.textContent="Preise werden geschätzt …";
+    $("qGo").disabled=true;
+    try{
+      var d = await askLookup(q, $("qRegion").value, qCtl.signal);
+      out.textContent="";
+      out.appendChild(el("div","hint",(d.leistung||q)+" · "+$("qRegion").value));
+      if(Number(d.von)>0&&Number(d.bis)>0) out.appendChild(el("div","range",eur(d.von)+" – "+eur(d.bis)));
+      if(d.hinweis) out.appendChild(el("p",null,d.hinweis));
+      var cols=el("div","cols");
+      [["Was den Preis treibt",d.preistreiber],["So sparst du",d.spartipps]].forEach(function(c){
+        if(!Array.isArray(c[1])||!c[1].length) return;
+        var w=el("div"); w.appendChild(el("strong",null,c[0])); var ul=el("ul");
+        c[1].forEach(function(x){ ul.appendChild(el("li",null,String(x))); }); w.appendChild(ul); cols.appendChild(w);
+      });
+      out.appendChild(cols);
+      var ad=el("div","ad"); ad.style.marginTop="16px"; ad.appendChild(el("b",null,"Anzeige")); ad.appendChild(el("span",null,"[Werbepartner zu dieser Leistung]")); out.appendChild(ad);
+      out.appendChild(el("p","disclaim","KI-Richtwert auf Basis allgemeiner Marktkenntnis. Lass dir immer ein konkretes Angebot geben."));
+    }catch(e){ if(!(e&&e.code==="cancelled")) out.textContent=errText(e); }
+    finally{ $("qGo").disabled=false; }
+  }
+  $("qGo").addEventListener("click", lookup);
+  $("q").addEventListener("keydown", function(e){ if(e.key==="Enter") lookup(); });
+  Array.prototype.forEach.call(document.querySelectorAll("#chips .chip"), function(c){ c.addEventListener("click", function(){ $("q").value=c.textContent; lookup(); }); });
+})();
+
+</script>
+</body>
+</html>

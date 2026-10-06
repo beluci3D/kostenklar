@@ -1,0 +1,5 @@
+# config.php darf nie direkt abgerufen werden
+<Files "config.php">
+    Require all denied
+</Files>
+Options -Indexes
